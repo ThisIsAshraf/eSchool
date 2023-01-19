@@ -16,7 +16,7 @@
         <?php 
         if(isset($_SESSION['isLogin'])){
             echo'
-            <a href="#" class="btn btn-success mt-3 my">My Profile</a>
+            <a href="./Student/my_profile.php" class="btn btn-success mt-3 my">My Profile</a>
             ';
         }else{
             echo'
@@ -50,123 +50,80 @@
     </div>
 </div>
 <!-- End Text-Banner -->
-
 <!-- Start Popular Courses -->
 <div class="container mt-5">
     <h1 class="text-center">Popular Course</h1>
     <!-- Start Popular Course 1st Card Deck -->
     <div class="card-deck mt-4">
-        <a href="" class="btn" style="text-align: left; padding:0px; margin:0px;">
-            <div class="card">
-                <img src="images/linux.jpg" alt="" class="card-img-top" alt="AAA">
-                <div class="card-body">
-                    <h5 class="card-title">Linux for Begineer</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, atque?
-                    </p>
+        <?php 
+        $sql = "select * from courses where is_active='1' limit 3";
+        $result= $connection ->query($sql);
+        if($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){
+                $course_id = $row['course_id'];
+                $course_name = $row['course_name'];
+                $course_desc = $row['course_desc'];
+                $course_price = $row['course_price'];
+                $course_img = $row['course_img'];
+                $course_original_price = $row['course_original_price'];
+                echo '<a href="./course_deatils.php?course_id='.$course_id.'" class="btn" style="text-align: left; padding:0px; margin:0px;">
+                <div class="card">
+                    <img src="'.str_replace('..', '.',$course_img).'" alt="" style="width: 345px; height:200px; margin: 0;" class="img-thumbnail mx-auto" alt="AAA">
+                    <div class="card-body">
+                        <h5 class="card-title">'.$course_name.'</h5>
+                        <p class="card-text">'.substr($course_desc, 0,75).'...
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <p class="card-text d-inline">Price: <small><del> &#36 '.$course_original_price.' </del></small><span
+                                class="font-weight-bolder"> &#36 '.$course_price.'<a href="./course_deatils.php?course_id='.$course_id.'"
+                                    class="btn btn-primary text-white font-weight-bolder float-right">Enroll</a></span>
+                        </p>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <p class="card-text d-inline">Price: <small><del>&#36 2000</del></small><span
-                            class="font-weight-bolder"><a href="./course_deatils.php"
-                                class="btn btn-primary text-white font-weight-bolder float-right">Enroll</a></span>
-                    </p>
-                </div>
-            </div>
-        </a>
-
-        <a href="" class="btn" style="text-align: left; padding:0px; margin:0px;">
-            <div class="card">
-                <img src="images/linux.jpg" alt="" class="card-img-top" alt="AAA">
-                <div class="card-body">
-                    <h5 class="card-title">Linux for Begineer</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, atque?
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <p class="card-text d-inline">Price: <small><del>&#36 2000</del></small><span
-                            class="font-weight-bolder"><a href=""
-                                class="btn btn-primary text-white font-weight-bolder float-right">Enroll</a></span>
-                    </p>
-                </div>
-            </div>
-        </a>
-
-        <a href="" class="btn" style="text-align: left; padding:0px; margin:0px;">
-            <div class="card">
-                <img src="images/linux.jpg" alt="" class="card-img-top" alt="AAA">
-                <div class="card-body">
-                    <h5 class="card-title">Linux for Begineer</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, atque?
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <p class="card-text d-inline">Price: <small><del>&#36 2000</del></small><span
-                            class="font-weight-bolder"><a href=""
-                                class="btn btn-primary text-white font-weight-bolder float-right">Enroll</a></span>
-                    </p>
-                </div>
-            </div>
-        </a>
-
+            </a>';
+            }
+        }
+        ?>
     </div>
     <!-- End Popular Course 1st Card Dec -->
 
     <!-- Start Popular Course 2nd Card Deck -->
     <div class="card-deck mt-4">
-        <a href="" class="btn" style="text-align: left; padding:0px; margin:0px;">
-            <div class="card">
-                <img src="images/wserver.png" alt="" class="card-img-top" alt="AAA">
-                <div class="card-body">
-                    <h5 class="card-title">Windows Server Management</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, atque?
-                    </p>
+    <?php 
+        $sql = "select * from courses where is_active='1' limit 3,3";
+        $result= $connection ->query($sql);
+        if($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){
+                $course_id = $row['course_id'];
+                $course_name = $row['course_name'];
+                $course_desc = $row['course_desc'];
+                $course_price = $row['course_price'];
+                $course_img = $row['course_img'];
+                $course_original_price = $row['course_original_price'];
+                echo '<a href="./course_deatils.php?course_id='.$course_id.'" class="btn" style="text-align: left; padding:0px; margin:0px;">
+                <div class="card">
+                    <img src="'.str_replace('..', '.',$course_img).'" alt="" style="width: 345px; height: 200px; margin: 0;" class="img-thumbnail mx-auto" alt="AAA">
+                    <div class="card-body">
+                        <h5 class="card-title">'.$course_name.'</h5>
+                        <p class="card-text">'.substr($course_desc, 0,75).'...
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <p class="card-text d-inline">Price: <small><del> &#36 '.$course_original_price.' </del></small><span
+                                class="font-weight-bolder"> &#36 '.$course_price.'<a href="./course_deatils.php?course_id='.$course_id.'"
+                                    class="btn btn-primary text-white font-weight-bolder float-right">Enroll</a></span>
+                        </p>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <p class="card-text d-inline">Price: <small><del>&#36 2000</del></small><span
-                            class="font-weight-bolder"><a href=""
-                                class="btn btn-primary text-white font-weight-bolder float-right">Enroll</a></span>
-                    </p>
-                </div>
-            </div>
-        </a>
-
-
-        <a href="" class="btn" style="text-align: left; padding:0px; margin:0px;">
-            <div class="card">
-                <img src="images/wserver.png" alt="" class="card-img-top" alt="AAA">
-                <div class="card-body">
-                    <h5 class="card-title">Windows Server Management</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, atque?
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <p class="card-text d-inline">Price: <small><del>&#36 2000</del></small><span
-                            class="font-weight-bolder"><a href=""
-                                class="btn btn-primary text-white font-weight-bolder float-right">Enroll</a></span>
-                    </p>
-                </div>
-            </div>
-        </a>
-
-        <a href="" class="btn" style="text-align: left; padding:0px; margin:0px;">
-            <div class="card">
-                <img src="images/wserver.png" alt="" class="card-img-top" alt="AAA">
-                <div class="card-body">
-                    <h5 class="card-title">Windows Server Management</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, atque?
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <p class="card-text d-inline">Price: <small><del>&#36 2000</del></small><span
-                            class="font-weight-bolder"><a href=""
-                                class="btn btn-primary text-white font-weight-bolder float-right">Enroll</a></span>
-                    </p>
-                </div>
-            </div>
-        </a>
+            </a>';
+            }
+        }
+        ?>
     </div>
     <!-- End Popular Course 2nd Card Dec -->
     <div class="text-center m-2">
-        <a href="" class="btn btn-danger btn-sm">View All Course</a>
+        <a href="courses.php" class="btn btn-danger btn-sm">View All Course</a>
     </div>
 </div>
 <!-- End Popular Courses -->
@@ -178,17 +135,27 @@
 <div class="container-fluid mt-5" style="background-color: #f5e8eb;" id="feedback">
     <h1 class="text-center p-4">Students Feedback</h1>
     <div class="row owl-carousel owl-theme">
-        <div class="col-md-12 ml-5 mb-5">
-            <div class="card" style="width: 18rem;">
-                <img src="images/linux.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the card's content.</p>
-                    <h5 class="card-title">Name</h5>
-                    <h5 class="card-title">Designation</h5>
+        <?php 
+        
+        $sql ="SELECT student_name, student_professions,student_image,feedback_content FROM students as stu JOIN feedbacks as fdc on stu.student_id = fdc.student_id WHERE fdc.is_active=1";
+
+        $result= $connection ->query($sql);
+        if($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){
+                echo ' <div class="col-md-12 ml-5 mb-5">
+                <div class="card" style="width: 18rem;">
+                    <img src="'.str_replace('..','.',$row['student_image']).'" class="card-img-top"  style="width: 287px; height: 200px; margin: 0;" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">'.$row['feedback_content'].'</p>
+                        <h5 class="card-title">'.$row['student_name'].'</h5>
+                        <small class="card-title">'.$row['student_professions'].'</small>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div>';
+            }
+        }
+        
+        ?>
     </div>
 </div>
 <!-- End Feedback -->

@@ -11,3 +11,4 @@
     <!-- Admin Custom Script -->
     <script src="../js/adminAjax.js" type="text/javascript"></script>
 </body>
+</html>

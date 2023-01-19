@@ -2,6 +2,7 @@
 $(document).ready(function () {
     console.clear();
     $("#student_Email").on("Keypress blur", function () {
+        var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         var stuEmail = $("#student_Email").val();
         $.ajax({
             url: './Student/student_signup.php',
@@ -11,12 +12,16 @@ $(document).ready(function () {
                 student_Email: stuEmail
             },
             success: function (data) {
+                // console.log(data);
                 if (data != 0) {
                     $("#statusMessage2").html("<small style='color:red;'>Email is already exist</small>");
                     $("#student_SignUpBtn").attr("disabled", true);
                 } else if (data == 0) {
                     $("#statusMessage2").html("<small style='color:green;'>New Email.There you Go !!</small>");
                     $("#student_SignUpBtn").attr("disabled", false);
+                } else if (!emailRegex.test(student_Email)) {
+                    $("#statusMessage2").html("<small style='color:red;'>Please Enter a valid Email !! e.g. example@mail.com</small>");
+                    $("#student_SignUpBtn").attr("disabled", true);
                 }
             }
         });
@@ -39,7 +44,7 @@ function addStudent() {
         return false;
     } else if (student_Email.trim() == "") {
         $("#statusMessage2").html("<small style='color:red;'>Please Enter your Email</small>");
-        $("#student_Email").focus();
+        $("#student_Name").focus();
         return false;
     } else if (student_Email.trim() != "" && !emailRegex.test(student_Email)) {
         $("#statusMessage2").html("<small style='color:red;'>Please Enter a valid Email !! e.g. example@mail.com</small>");

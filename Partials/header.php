@@ -47,7 +47,7 @@
                 if(isset($_SESSION['isLogin'])){
 
                     echo '
-                    <li class="nav-item custom-nav-item"><a href="#" class="nav-link">My Profile</a></li>
+                    <li class="nav-item custom-nav-item"><a href="./Student/my_profile.php" class="nav-link">My Profile</a></li>
                      <li class="nav-item custom-nav-item"><a href="./logout.php" class="nav-link">Logout</a></li>
                     ';
 
@@ -59,7 +59,7 @@
                 }
                 ?>
                 <li class="nav-item custom-nav-item"><a href="#" class="nav-link">FeedBack</a></li>
-                <li class="nav-item custom-nav-item"><a href="#" class="nav-link">Contact</a></li>
+                <!-- <li class="nav-item custom-nav-item"><a href="contact.php" class="nav-link">Contact</a></li> -->
             </ul>
         </div>
     </nav>
