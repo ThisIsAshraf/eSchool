@@ -26,6 +26,7 @@
         <script type="text/javascript" src="./js/studentAjax.js"></script>
         <!-- Admin Signup and Login Script -->
         <script type="text/javascript" src="./js/adminAjax.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
     $('.owl-carousel').owlCarousel({
         loop: false,

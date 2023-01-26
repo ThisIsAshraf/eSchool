@@ -29,9 +29,15 @@ if(isset( $_SESSION['isAdminLogin'])){
         $course_duration = $_POST['course_duration'];
         $course_original_price = $_POST['course_original_price'];
         $course_selling_price = $_POST['course_selling_price'];
-        $course_image = '../images/courseimages/'.$_FILES['course_img']['name'];
-
-        $sql = "UPDATE courses SET course_name = '$course_name', course_desc='$course_desc', course_author='$course_author', course_img='$course_image', course_duration='$course_duration', course_price='$course_selling_price', course_original_price='$course_original_price' WHERE course_id='$course_id'";
+        $course_image = $_FILES['course_img']['name'];
+        $course_img_temp = $_FILES['course_img']['tmp_name'];
+        if($course_image){
+            $img_folder = '../images/students_images/'.$student_image;
+            move_uploaded_file($student_img_temp, $img_folder);
+            $sql = "UPDATE courses SET course_name = '$course_name', course_desc='$course_desc', course_author='$course_author', course_img='$img_folder', course_duration='$course_duration', course_price='$course_selling_price', course_original_price='$course_original_price' WHERE course_id='$course_id'";
+        }else{
+            $sql = "UPDATE courses SET course_name = '$course_name', course_desc='$course_desc', course_author='$course_author',course_duration='$course_duration', course_price='$course_selling_price', course_original_price='$course_original_price' WHERE course_id='$course_id'";
+        }
         if($connection ->query($sql) == TRUE){
             $statusMessage = '<div class="alert alert-success alert-dismissible fade show col-sm-6 ml-5 mt-2" role="alert">
             <strong>Course Updated Successfully !!</strong>.
@@ -93,7 +99,7 @@ if(isset( $_SESSION['isAdminLogin'])){
             <label for="course_img" class="font-weight-bold">Image</label>
             <img src="<?php if(isset($fetechedData['course_img'])){ echo $fetechedData['course_img'];} ?>"
                 alt="Course_image" class="img-thumbnail mb-3 mt-2" style="height: 250px; width:450px;">
-            <input type="file" name="course_img" id="course_img" class="form-control-file" required>
+            <input type="file" name="course_img" id="course_img" class="form-control-file">
         </div>
         <div class="text-center">
             <button type="submit" class="btn btn-success mr-3" name="course_UpdateBtn"

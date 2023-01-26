@@ -27,9 +27,17 @@ if(isset( $_SESSION['isAdminLogin'])){
         $course_name = $_POST['course_name'];
         $module_name = $_POST['module_name'];
         $module_desc = $_POST['module_desc'];
-        $course_image = '../videos/module_videos/'.$_FILES['course_img']['name'];
-    // Update Query
-        $sql = "UPDATE module SET module_name='$module_name', module_desc='$module_desc', module_url='$course_image', course_id='$course_id', course_name='$course_name' WHERE module_id='$module_id'";
+        $course_image = $_FILES['course_img']['name'];
+        $course_img_temp = $_FILES['course_img']['tmp_name'];
+        if($course_image){
+            $video_folder = '../videos/module_videos/'.$_FILES['course_img']['name'];
+            move_uploaded_file($course_img_temp, $video_folder);
+            // Update Query
+            $sql = "UPDATE module SET module_name='$module_name', module_desc='$module_desc', module_url='$video_folder', course_id='$course_id', course_name='$course_name' WHERE module_id='$module_id'";
+        }else{
+            $sql = "UPDATE module SET module_name='$module_name', module_desc='$module_desc', course_id='$course_id', course_name='$course_name' WHERE module_id='$module_id'";
+        }
+        
         if($connection ->query($sql) == TRUE){
             $statusMessage = '<div class="alert alert-success alert-dismissible fade show col-sm-6 ml-5 mt-2" role="alert">
             <strong>Module Updated Successfully !!</strong>.
@@ -77,7 +85,7 @@ if(isset( $_SESSION['isAdminLogin'])){
                 <iframe src="<?php if(isset($fetechedData['module_url'])){ echo $fetechedData['module_url'];} ?>"
                     allowfullscreen class="embed-responsive-item"></iframe>
             </div>
-            <input type="file" name="course_img" id="course_img" class="form-control-file mt-4" required>
+            <input type="file" name="course_img" id="course_img" class="form-control-file mt-4">
         </div>
         <div class="text-center">
             <button type="submit" class="btn btn-success mr-3" name="Module_UpdateBtn"

@@ -73,13 +73,16 @@ function addStudent() {
             success: function (data) {
                 // console.log(data)
                 if (data == "OK") {
+                    toastr.success('Congratulation !! Registration Successful!!');
                     $('#successMessage').html("<span class='alert alert-success'>Congratulation !! Registration Successful!!</span>");
                     setTimeout(() => {
                         $('#successMessage').html(" ");
                     }, 5000);
                     clearFormData();
                 } else if (data == "Failed") {
-                    $('#successMessage').html("<span class='alert alert-danger'>Failed to registr</span>");
+                    toastr.error('Failed to register');
+
+                    $('#successMessage').html("<span class='alert alert-danger'>Failed to register</span>");
                 }
             }
         });

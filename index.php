@@ -1,6 +1,5 @@
 <!-- ************** Including Navbar ************** -->
 <?php include_once('./Partials/header.php');?>
-
 <!-- Start Video Background -->
 <div class="container-fluid remove-video-margin">
     <div class="video-parent">

@@ -2,9 +2,15 @@
 if(!isset($_SESSION)){
     session_start();
 }
-
-include_once('../Partials/_dbconnect.php');
+if (isset($_SESSION['flash_message'])) {
+    $message = $_SESSION['flash_message'];
+    unset($_SESSION['flash_message']);
+}
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    header('location: ' . $_SERVER['PHP_SELF']);
+}
 include_once('student_header.php');
+include_once('../Partials/_dbconnect.php');
 if(isset($_SESSION['isLogin'])){
     $student_email = $_SESSION['student_Email'];
 }else{
@@ -32,20 +38,24 @@ if (isset($_POST['student_name']) && isset($_POST['student_email']) && isset($_P
         $Student_designation = $_POST['student_profession'];
         $student_image = $_FILES['student_img']['name'];
         $student_img_temp = $_FILES['student_img']['tmp_name'];
-        $img_folder = '../images/students_images/'.$student_image;
-        move_uploaded_file($student_img_temp, $img_folder);
-
+        if ($student_image) {
+            $img_folder = '../images/students_images/'.$student_image;
+            move_uploaded_file($student_img_temp, $img_folder);
             $sql = "UPDATE students SET student_name ='$Student_Name', student_email='$Student_Email', student_phone='$Student_Phone',student_image=' $img_folder', student_professions='$Student_designation' WHERE student_id='$student_id'";
+        }else{
+            $sql = "UPDATE students SET student_name ='$Student_Name', student_email='$Student_Email', student_phone='$Student_Phone', student_professions='$Student_designation' WHERE student_id='$student_id'";
+        }
+
 
             if($connection ->query($sql) == TRUE){
-                $statusMessage = '<div class="alert alert-success alert-dismissible fade show col-sm-6 ml-5 mt-2" role="alert">
+                $_SESSION['flash_message'] = '<div class="alert alert-success alert-dismissible fade show col-sm-6 ml-5 mt-2" role="alert">
                 <strong>Student Profile Updated Successfully !!</strong>.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>';
             }else{
-                $statusMessage = '<div class="alert alert-danger alert-dismissible fade show col-sm-6 ml-5 mt-2" role="alert">
+                $_SESSION['flash_message'] = '<div class="alert alert-danger alert-dismissible fade show col-sm-6 ml-5 mt-2" role="alert">
                 <strong>Unable to Update Student Profile !!</strong>.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -79,16 +89,16 @@ if (isset($_POST['student_name']) && isset($_POST['student_email']) && isset($_P
             <input type="text" name="student_profession" id="student_profession" class="form-control" required autocomplete="off" value="<?php if(isset($row['student_professions'])) { echo $row['student_professions'];}?>">
         </div>
         <div class="form-group">
-            <input type="file" name="student_img" id="student_img" class="form-control-file" required>
+            <input type="file" name="student_img" id="student_img" class="form-control-file">
         </div>
         <div class="text-center">
             <button type="submit" class="btn btn-success mr-3" name="student_UpdateBtn" id="student_UpdateBtn">Submit</button>
             <a href="students.php" class="btn btn-danger">Close</a>
         </div>
         <?php
-        if (isset($statusMessage)) {
-            echo $statusMessage;
-        }
+            if(isset($message)){
+                echo $message;
+            }
         ?>
     </form>
 </div>
